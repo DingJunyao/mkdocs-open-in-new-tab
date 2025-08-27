@@ -2,19 +2,19 @@ from setuptools import setup, find_packages
 
 
 def readme():
-    with open("README.md") as f:
+    with open("README.md", encoding="utf-8") as f:
         return f.read()
 
 
 def import_requirements():
     """Imports requirements from requirements.txt file."""
-    with open("requirements.txt") as f:
+    with open("requirements.txt", encoding="utf-8") as f:
         return f.read().splitlines()
 
 
 def import_dev_requirements():
     """Imports requirements from devdeps.txt file."""
-    with open("devdeps.txt") as f:
+    with open("devdeps.txt", encoding="utf-8") as f:
         return f.read().splitlines()
 
 
