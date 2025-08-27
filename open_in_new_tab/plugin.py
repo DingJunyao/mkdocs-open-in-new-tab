@@ -15,6 +15,7 @@ from mkdocs.utils import copy_file
 
 class OpenInNewTabPluginConfig(Config):
     add_icon = Type(bool, default=False)
+    exclude_hosts = Type(list, default=[])
 
 
 class OpenInNewTabPlugin(BasePlugin[OpenInNewTabPluginConfig]):
@@ -36,7 +37,17 @@ class OpenInNewTabPlugin(BasePlugin[OpenInNewTabPluginConfig]):
         See https://www.mkdocs.org/user-guide/plugins/#on_post_build.
         """
         site_dir = Path(config["site_dir"])
-        self.copy_asset("js/open_in_new_tab.js", site_dir)
+        js_asset_path = "js/open_in_new_tab.js"
+        self.copy_asset(js_asset_path, site_dir)
+        if self.config.exclude_hosts:
+            dest_path = site_dir / js_asset_path
+            exclude_hosts_str = ", ".join([f'"{i}"' for i in self.config.exclude_hosts])
+            dest_path.write_text(
+                dest_path.read_text().replace(
+                    "const exclude_hosts = [];",
+                    f"const exclude_hosts = [{exclude_hosts_str}];",
+                )
+            )
 
         if self.config.add_icon:
             self.copy_asset("css/open_in_new_tab.css", site_dir)
