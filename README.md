@@ -40,6 +40,8 @@ The plugin supports the following configuration option:
 
 - `add_icon:` (default: false)
     - If set to true, the plugin will add an icon next to external links.
+- `exclude_hosts` (list, default: empty)
+    - If the host of the link is included in the list, it will not be treated as an external link.
 
 
 ## Testing
